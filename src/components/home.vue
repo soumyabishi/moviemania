@@ -21,6 +21,7 @@
               <!-- <router-link to="home">Home</router-link> -->
 
               <img v-bind:src="'https://image.tmdb.org/t/p/w185/' + movie.poster_path">
+
               <router-link :to="'/movie/'+ movie.id">  <p class="text-light text-ellipsis movie-title">{{movie.title}}</p> </router-link>
 
               <p>

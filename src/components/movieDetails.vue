@@ -1,13 +1,41 @@
 <template>
-     <div class="text-light">
 
 
-             <p> Movie name : <br>{{movie_details.original_title}}  </p>
-            <p> Overview : <br>{{movie_details.overview}}  </p>
-              <p> Release Date : <br>{{movie_details.release_date}}  </p>
+ <section class="movie-detials-intro">
+
+   <div class="container grid-xl">
+
+
+
+     <div class="columns">
+
+       <div class="column col-4">
+
+         <img src="/src/assets/poster.jpg" width="100%">
+       </div>
+
+
+       <div class="column col-8">
+
+          <h1 class="text-light">Justice league</h1>
+          <p>Action, Adventure, Fantasy, Science Fiction</p>
+       </div>
 
 
      </div>
+
+   </div>
+
+ </section>
+
+
+
+             <!-- <p> Movie name : <br>{{movie_details.original_title}}  </p>
+            <p> Overview : <br>{{movie_details.overview}}  </p>
+              <p> Release Date : <br>{{movie_details.release_date}}  </p> -->
+
+
+
 </template>
 
 <script>
@@ -60,8 +88,9 @@ export default {
 @import url('/node_modules/spectre.css/dist/spectre.min.css');
 
 
-body{
-  background-color: #05243E;
+
+section.movie-detials-intro{
+    background-color: #777;
 }
 
 
