@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="background-color: #05243E;">
   <section class="text-center intro">
 
     <div class="container">
@@ -120,10 +120,6 @@ export default {
 
 @import url('/node_modules/spectre.css/dist/spectre.min.css');
 
-
-body{
-  background-color: #05243E;
-}
 
 
 section.intro{
