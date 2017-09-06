@@ -55,11 +55,34 @@ export default {
   // Functions
   methods: {
 
+
+    // vue progress
+
+    start () {
+        this.$Progress.start()
+    },
+    set (num) {
+        this.$Progress.set(num)
+    },
+    increase (num) {
+        this.$Progress.increase(num)
+    },
+    decrease (num) {
+        this.$Progress.decrease(num)
+    },
+    finish () {
+        this.$Progress.finish()
+    },
+    fail () {
+        this.$Progress.fail()
+    },
+
+
     fetchData() {
 
       this.loading = true;
 
-      this.$http.get('https://api.themoviedb.org/3/discover/movie?page=1&include_video=false&include_adult=false&sort_by=popularity.desc&language=en-US&api_key=37f0eca988a8498c779fac93ab4c4189')
+      this.$http.get('https://api.themoviedb.org/3/discover/movie?page=1&include_video=false&include_adult=false&sort_by=popularity.desc&language=en-US&api_key=37f0eca988a8498c779fac93ab4c4189&append_to_response=videos,credits,similar')
 
         .then(response => {
           //  return response.json();
@@ -105,7 +128,7 @@ body{
 
 section.intro{
   padding-top: 100px;
-  background: url(/src/assets/bg.jpg);
+  background: url('/src/assets/bg.jpg');
   background-repeat-y: no-repeat;
 
   h1{

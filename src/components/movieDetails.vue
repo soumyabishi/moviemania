@@ -30,8 +30,12 @@
 
                 <div class="column col-8">
 
-                    <h1 class="text-light moviename">Justice league</h1>
-                    <p class="moviecategory">Action, Adventure, Fantasy, Science Fiction</p>
+                    <h1 class="text-light moviename"> {{movie_details.original_title}}</h1>
+
+                    <span class="moviecategory" v-for="genre_details in movie_details.genres">
+                         {{genre_details.name}}
+                         ,
+                      </span>
 
                     <div class="columns">
 
@@ -39,14 +43,14 @@
                         <div class="column col-4">
 
                             <p class="popularity"> Popularity</p>
-                            <h2 class="moviepercent">52%</h2>
+                            <h2 class="moviepercent">{{movie_details.popularity}}</h2>
 
                         </div>
 
                         <div class="column col-4 ratings">
 
-                            <p class="movierating"> Ratings</p>
-                            <p class="movieindex">7.1</p>
+                            <p class="movierating">Rating </p>
+                            <p class="movieindex">  {{movie_details.vote_average}}</p>
 
                         </div>
 
@@ -90,7 +94,7 @@
 
                 <div class="column col-8">
                     <p class="storyline">Storyline</p>
-                    <p class="storylineparagraph">After his career is destroyed, a brilliant but arrogant surgeon gets a new lease on life when a sorcerer takes him under his wing and trains him to defend the world against evil.</p>
+                    <p class="storylineparagraph"> {{movie_details.overview}}</p>
                     <p class="storyline">Cast</p>
                 </div>
 
