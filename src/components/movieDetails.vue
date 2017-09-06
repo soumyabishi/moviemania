@@ -1,11 +1,11 @@
 <template>
 <div>
 
-    <section>
+    <section class="movielogo">
         <div class="container grid-xl">
             <div class="columns">
 
-                <div class="column col-4">
+                <div class="column col-2">
 
                     <img src="/src/assets/logo.svg" width="100%">
                 </div>
@@ -339,5 +339,10 @@ section.movie-detials-intro{
     width: 242px;
     height: 362px;
     object-fit: contain;
+}
+
+.movielogo{
+    background-color: #2b2327;
+
 }
 </style>
