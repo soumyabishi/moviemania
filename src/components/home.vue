@@ -17,9 +17,7 @@
     <div class="columns">
 
             <div class="column col-2" v-for="movie in movie_list">
-
               <!-- <router-link to="home">Home</router-link> -->
-
               <img v-bind:src="'https://image.tmdb.org/t/p/w185/' + movie.poster_path">
 
               <router-link :to="'/movie/'+ movie.id">  <p class="text-light text-ellipsis movie-title">{{movie.title}}</p> </router-link>
@@ -87,7 +85,7 @@ export default {
         .then(response => {
           //  return response.json();
 
-          this.movie_list = response.body.results
+          this.movie_list = response.body.results;
           this.loading = false;
         }, error => {
           console.log();

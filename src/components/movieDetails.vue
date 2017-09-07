@@ -24,10 +24,10 @@
 
       <div class="columns">
 
-        <div class="column col-3 text-center">
+        <div class="column col-3 text-center" style="position:relative;">
 
 
-          <img class="movieheaderimage" v-bind:src="'https://image.tmdb.org/t/p/w185/' + movie_details.poster_path" width="100%">
+          <img class="movieheaderimage rounded" v-bind:src="'https://image.tmdb.org/t/p/w600/' + movie_details.poster_path" width="100%">
 
 
 
@@ -40,9 +40,9 @@
 
           <h1 class="text-light moviename"> {{movie_details.original_title}}</h1>
 
-          <span class="moviecategory" v-for="genre_details in movie_details.genres">
-                         {{genre_details.name}},
-                      </span>
+           <p><span class="moviecategory" v-for="genre_details in movie_details.genres"> {{genre_details.name}},  </span></p>
+
+
 
           <div class="columns">
 
@@ -66,7 +66,7 @@
 
           <div class="columns">
 
-            <button class="btn watchtrailer watchtrailertext"><img src="/src/assets/playcircle.svg ">Watch Trailer</button>
+            <button class="btn watchtrailer watchtrailertext" @click="activeTrialer=true">Watch Trailer</button>
 
           </div>
 
@@ -83,7 +83,7 @@
   </section>
 
 
-  <section>
+  <section class="cast">
     <div class="container grid-xl">
       <div class="columns">
         <div class="column col-3">
@@ -94,7 +94,27 @@
 
 
           <p class="storylineparagraph"> {{movie_details.overview}}</p>
+
+
           <p class="storyline">Cast</p>
+
+
+            <div class="columns">
+
+               <div class="column" v-if="index<5" v-for="(cast_details,index) in movie_details.credits.cast">
+
+                  <img class="rounded" v-bind:src="'https://image.tmdb.org/t/p/w276_and_h350_bestv2/' + cast_details.profile_path" width="110px">
+                    <p class="name text-ellipsis">{{cast_details.name}}</p>
+                    <span>{{cast_details.character}}</span>
+               </div>
+
+
+
+            </div>
+
+
+
+
         </div>
 
       </div>
@@ -106,80 +126,59 @@
 
 
   <section class="similarmovies">
-    <div>
+
       <p class="similarmoviestext">Similar Movies</p>
-    </div>
+
     <div class="container grid-lg">
-      <div class="columns similarmovi">
+      <div class="columns similarmovie">
 
 
-        <div class="column">
+        <div class="column" v-if="number<5" v-for="(similar_movies,number) in movie_details.similar.results">
           <div class="card">
             <div class="card-image movielist">
-              <img src="/src/assets/poster.jpg" class="img-responsive">
-              <p class="justiceleague">Justice Leauge</p>
+
+                <img class="rounded" v-bind:src="'https://image.tmdb.org/t/p/w600/' + similar_movies.poster_path" width="100%">
+
+
+                <p class="similarmovie_name text-ellipsis">{{similar_movies.title}}</p>
             </div>
           </div>
 
         </div>
 
-        <div class="column">
-          <div class="card">
-            <div class="card-image movielist">
-              <img src="/src/assets/poster.jpg" class="img-responsive">
-              <p class="justiceleague">Justice Leauge</p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="column">
-          <div class="card">
-            <div class="card-image movielist">
-              <img src="/src/assets/poster.jpg" class="img-responsive">
-              <p class="justiceleague">Justice Leauge</p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="column">
-          <div class="card">
-            <div class="card-image movielist">
-              <img src="/src/assets/poster.jpg" class="img-responsive">
-              <p class="justiceleague">Justice Leauge</p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="column">
-          <div class="card">
-            <div class="card-image movielist">
-              <img src="/src/assets/poster.jpg" class="img-responsive">
-              <p class="justiceleague">Justice Leauge</p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="column">
-          <div class="card">
-            <div class="card-image movielist">
-              <img src="/src/assets/poster.jpg" class="img-responsive">
-              <p class="justiceleague">Justice Leauge</p>
-            </div>
-          </div>
-
-        </div>
 
       </div>
     </div>
+
+
+
+    <!-- Video modal -->
+    <div class="modal" v-bind:class="{'active':activeTrialer}">
+      <div class="modal-overlay"></div>
+      <div class="modal-container">
+        <div class="modal-header">
+          <button class="btn btn-clear float-right" @click="activeTrialer=false"></button>
+          <div class="modal-title h5">{{ movie_details.title }}</div>
+        </div>
+        <div class="modal-body">
+          <div class="content" v-if="movie_details.videos">
+            <iframe width="560" height="315" v-bind:src="'https://www.youtube.com/embed/' + movie_details.videos.results[0].key " frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="modal-footer">
+          ...
+        </div>
+      </div>
+    </div>
+
   </section>
 
 
 </div>
 </template>
+
+
+
 
 <script>
 export default {
@@ -188,6 +187,7 @@ export default {
     return {
       loading: false,
       movie_details: '',
+      activeTrialer: false
     }
   },
 
@@ -209,7 +209,7 @@ export default {
       this.loading = true;
       var movieId = this.$route.params.id;
 
-      this.$http.get('https://api.themoviedb.org/3/movie/' + movieId + '?language=en-US&api_key=37f0eca988a8498c779fac93ab4c4189')
+      this.$http.get('https://api.themoviedb.org/3/movie/' + movieId + '?language=en-US&api_key=37f0eca988a8498c779fac93ab4c4189&append_to_response=videos,credits,similar')
         .then(response => {
           //  return response.json();
           this.movie_details = response.body;
@@ -250,7 +250,7 @@ section.movie-detials-intro {
     padding-top: 20px;
     position: relative;
     background: rgba(0, 0, 0, 0.13);
-        min-height: 520px;
+    min-height: 450px;
     header{
       padding-left: 65px;
       margin-bottom: 45px;
@@ -302,6 +302,7 @@ section.movie-detials-intro {
     font-size: 40px;
     font-weight: bold;
     color: #ffffff;
+    padding-top: 30px;
 }
 
 .moviecategory {
@@ -315,6 +316,7 @@ section.movie-detials-intro {
     opacity: 0.65;
     font-size: 14px;
     color: #ffffff;
+    margin-bottom: 8px;
 }
 
 .movierating {
@@ -322,6 +324,7 @@ section.movie-detials-intro {
     opacity: 0.65;
     font-size: 14px;
     color: #ffffff;
+    margin-bottom: 8px;
 }
 
 .moviepercent {
@@ -343,8 +346,20 @@ section.movie-detials-intro {
 }
 
 .watchtrailer {
-    border-radius: 4px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.09);
+  border: none;
+  padding: 11px 35px;
+  height: auto;
+  margin-top: 19px;
+  margin-left: 7px;
+
+  &:hover, &:focus, &:active{
     background-color: rgba(255, 255, 255, 0.09);
+    border: none;
+    box-shadow: none;
+
+  }
 }
 .watchtrailertext {
     font-size: 14px;
@@ -367,6 +382,8 @@ section.movie-detials-intro {
 .similarmovies {
     height: 589px;
     background-color: #f4f8fc;
+    padding-top: 20px;
+    margin-top: 70px;
 }
 
 .similarmoviestext {
@@ -375,6 +392,7 @@ section.movie-detials-intro {
     font-weight: 600;
     text-align: center;
     color: #000000;
+    padding-bottom: 20px;
 }
 
 .movielist {
@@ -382,27 +400,42 @@ section.movie-detials-intro {
     height: 196.8px;
 }
 
-.justiceleague {
-    margin-top: 8px;
-    font-size: 11.2px;
-    font-weight: 500;
-    color: #000000;
+p.similarmovie_name {
+  width: 173px;
 }
 
-.similarmovi {
-    margin-top: 57px;
-}
+
 
 .movieheaderimage {
-    width: 242px;
-    height: 362px;
-    object-fit: contain;
+  position: absolute;
+  right: 30px;
+  top: 12px;
+  width: 260px;
+  box-shadow: 0 7px 21px rgba(0, 0, 0, 0.12);
+
 }
 
 .movielogo {
     background-color: #05243E;
     padding-top: 20px;
     padding-left: 65px;
+
+}
+
+
+
+section.cast{
+
+  p.name{
+  margin-bottom: 2px;
+      width: 116px;
+      color: #000;
+  }
+    span{
+      display: block;
+      font-size: 12px;
+          color: #777777;
+    }
 
 }
 </style>
