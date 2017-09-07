@@ -15,7 +15,7 @@
 
     <header>
       <div class="container grid-xl">
-        <a href="/"><img src="/src/assets/logo.svg"></a>
+        <a class="logo" href="/"><img src="/src/assets/logo.svg"></a>
       </div>
     </header>
 
@@ -377,11 +377,20 @@ section.movie-detials-intro {
   height: auto;
   margin-top: 19px;
   margin-left: 7px;
+  background-image: url("/src/assets/play_icon.svg");
+  background-repeat: no-repeat;
+  background-position: 26px 11px;
+  padding-left: 56px;
 
+  
   &:hover, &:focus, &:active{
     background-color: rgba(255, 255, 255, 0.09);
     border: none;
     box-shadow: none;
+    background-image: url("/src/assets/play_icon.svg");
+    background-repeat: no-repeat;
+    background-position: 26px 11px;
+    padding-left: 56px;
 
   }
 }
@@ -447,11 +456,17 @@ p.similarmovie_name {
 }
 
 
+a.logo{
+  &:hover, &:active, &:focus{
+    text-decoration: none;
+    box-shadow: none;
+  }
+}
 
 section.cast{
 
   p.name{
-  margin-bottom: 2px;
+  margin-bottom: 0;
       width: 116px;
       color: #000;
   }

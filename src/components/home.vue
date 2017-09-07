@@ -14,17 +14,25 @@
   </section>
   <div class="container grid-xl">
 
+      <h4 class="text-light" style="margin-bottom: 25px;font-weight: 200;letter-spacing: 1px;">Popular movies</h4>
+
     <div class="columns">
 
             <div class="column col-2" v-for="movie in movie_list">
               <!-- <router-link to="home">Home</router-link> -->
-              <img v-bind:src="'https://image.tmdb.org/t/p/w185/' + movie.poster_path">
 
-              <router-link :to="'/movie/'+ movie.id">  <p class="text-light text-ellipsis movie-title">{{movie.title}}</p> </router-link>
+               <router-link :to="'/movie/'+ movie.id" class="movieCard">
 
-              <p>
-                 <span class="rating">{{movie.vote_average}} </span>
-               </p>
+                 <div>
+                        <img v-bind:src="'https://image.tmdb.org/t/p/w185/' + movie.poster_path">
+
+                         <p class="text-light text-ellipsis movie-title">{{movie.title}}</p>
+
+                        <p>
+                           <span class="rating">{{movie.vote_average}} </span>
+                         </p>
+                    </div>
+                </router-link>
             </div>
 
 
@@ -161,5 +169,31 @@ p{
   background-repeat: no-repeat;
 }
 
+
+
+.movieCard{
+
+
+   &:hover{
+       text-decoration: none;
+   }
+
+    .rating{
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+
+    div{
+        -webkit-transition: all .2s ease;
+        -moz-transition: all .2s ease;
+        transition: all .2s ease;
+
+        &:hover,
+        &:focus {
+            transform: scale3d(1.01, 1.01, 1);
+        }
+    }
+
+}
 
 </style>
