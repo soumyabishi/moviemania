@@ -204,8 +204,30 @@ export default {
   // Functions
   methods: {
 
+
+    start () {
+        this.$Progress.start()
+    },
+    set (num) {
+        this.$Progress.set(num)
+    },
+    increase (num) {
+        this.$Progress.increase(num)
+    },
+    decrease (num) {
+        this.$Progress.decrease(num)
+    },
+    finish () {
+        this.$Progress.finish()
+    },
+    fail () {
+        this.$Progress.fail()
+    },
+
     fetchData() {
 
+
+      this.$Progress.start()
       this.loading = true;
       var movieId = this.$route.params.id;
 
@@ -213,8 +235,10 @@ export default {
         .then(response => {
           //  return response.json();
           this.movie_details = response.body;
+          this.$Progress.finish()
         }, error => {
           console.log();
+          this.$Progress.fail()
         });
 
 

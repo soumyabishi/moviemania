@@ -15,10 +15,13 @@ Vue.use(VueResource);
 import VueProgressBar from 'vue-progressbar'
 
 Vue.use(VueProgressBar, {
-  color: 'rgb(143, 255, 199)',
+  color: '#57C5CB',
   failedColor: 'red',
   height: '2px'
 })
+
+
+
 
 
 

@@ -78,6 +78,9 @@ export default {
 
     fetchData() {
 
+
+
+      this.$Progress.start()
       this.loading = true;
 
       this.$http.get('https://api.themoviedb.org/3/discover/movie?page=1&include_video=false&include_adult=false&sort_by=popularity.desc&language=en-US&api_key=37f0eca988a8498c779fac93ab4c4189&append_to_response=videos,credits,similar')
@@ -87,8 +90,10 @@ export default {
 
           this.movie_list = response.body.results;
           this.loading = false;
+          this.$Progress.finish()
         }, error => {
           console.log();
+          this.$Progress.fail()
         });
     },
 
