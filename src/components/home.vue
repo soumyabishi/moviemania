@@ -24,7 +24,9 @@
                <router-link :to="'/movie/'+ movie.id" class="movieCard">
 
                  <div>
-                        <img v-bind:src="'https://image.tmdb.org/t/p/w185/' + movie.poster_path">
+
+
+                        <div class="image-placeholder"><img v-lazy="'https://image.tmdb.org/t/p/w185/' + movie.poster_path" class="lazy-img-fadein"> </div>
 
                          <p class="text-light text-ellipsis movie-title">{{movie.title}}</p>
 
@@ -98,11 +100,15 @@ export default {
 
           this.movie_list = response.body.results;
           this.loading = false;
+          
           this.$Progress.finish()
+
         }, error => {
           console.log();
           this.$Progress.fail()
         });
+
+
     },
 
 
@@ -130,6 +136,52 @@ export default {
 <style lang="scss">
 
 @import url('/node_modules/spectre.css/dist/spectre.min.css');
+
+
+// Lazy loading
+
+
+  @-webkit-keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+  }
+  @keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+  }
+  .lazy-img-fadein[lazy=loaded] {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+  }
+  .lazy-img-fadein[lazy=loading] {
+    width: 30px!important;
+    margin: auto;
+  }
+  .lazy-img-fadein[lazy-progressive=true] {
+    width: 100%!important;
+    margin: auto;
+  }
+  .lazy-img-fadein[lazy=error] {
+    border-radius: 2px;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+  }
 
 
 
@@ -173,6 +225,10 @@ p{
 
 .movieCard{
 
+  .image-placeholder{
+    min-height: 185px;
+  }
+
 
    &:hover{
        text-decoration: none;
@@ -187,6 +243,7 @@ p{
         -webkit-transition: all .2s ease;
         -moz-transition: all .2s ease;
         transition: all .2s ease;
+
 
         &:hover,
         &:focus {

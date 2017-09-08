@@ -9,7 +9,7 @@
 
      <div class="backdropImage">
 
-       <img v-bind:src="'https://image.tmdb.org/t/p/w185/' + movie_details.poster_path" width="100%">
+       <img v-lazy="'https://image.tmdb.org/t/p/w185/' + movie_details.poster_path" width="100%" >
           <!-- <img  v-bind:src="'https://image.tmdb.org/t/p/w1400_and_h450_bestv2' + movie_details.backdrop_path" width="100%"> -->
      </div>
 
@@ -27,7 +27,7 @@
         <div class="column col-3 text-center" style="position:relative;">
 
 
-          <img class="movieheaderimage rounded" v-bind:src="'https://image.tmdb.org/t/p/w600/' + movie_details.poster_path" width="100%">
+          <img class="movieheaderimage rounded lazy-img-fadein" v-lazy="'https://image.tmdb.org/t/p/w600/' + movie_details.poster_path" width="100%">
 
 
 
@@ -101,9 +101,10 @@
 
             <div class="columns">
 
-               <div class="column" v-if="index<5" v-for="(cast_details,index) in movie_details.credits.cast">
+               <div class="column" v-if="index<5"
+               v-for="(cast_details,index) in movie_details.credits.cast">
 
-                  <img class="rounded" v-bind:src="'https://image.tmdb.org/t/p/w276_and_h350_bestv2/' + cast_details.profile_path" width="110px">
+                  <img class="rounded lazy-img-fadein" v-lazy="'https://image.tmdb.org/t/p/w276_and_h350_bestv2/' + cast_details.profile_path" width="110px">
                     <p class="name text-ellipsis">{{cast_details.name}}</p>
                     <span>{{cast_details.character}}</span>
                </div>
@@ -137,7 +138,7 @@
           <div class="card">
             <div class="card-image movielist">
 
-                <img class="rounded" v-bind:src="'https://image.tmdb.org/t/p/w600/' + similar_movies.poster_path" width="100%">
+                <img class="rounded lazy-img-fadein" v-lazy="'https://image.tmdb.org/t/p/w600/' + similar_movies.poster_path" width="100%">
 
 
                 <p class="similarmovie_name text-ellipsis">{{similar_movies.title}}</p>
@@ -186,7 +187,21 @@ export default {
   data: function() {
     return {
       loading: false,
-      movie_details: '',
+      movie_details: {
+        credits: {
+          cast: {}
+        },
+        similar: {
+          results: {}
+        },
+        videos: {
+          results: [
+            {
+              key: ''
+            }
+          ]
+        }
+      },
       activeTrialer: false
     }
   },
@@ -259,6 +274,55 @@ export default {
 
 <style lang="scss">
 @import url( '/node_modules/spectre.css/dist/spectre.min.css');
+
+
+
+// Lazy loading
+
+
+  @-webkit-keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+  }
+  @keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+  }
+  .lazy-img-fadein[lazy=loaded] {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+  }
+  .lazy-img-fadein[lazy=loading] {
+    width: 40px!important;
+    margin: auto;
+  }
+  .lazy-img-fadein[lazy-progressive=true] {
+    width: 100%!important;
+    margin: auto;
+  }
+  .lazy-img-fadein[lazy=error] {
+    border-radius: 2px;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+  }
+
+
 
 body {
     background-color: white;
@@ -382,7 +446,7 @@ section.movie-detials-intro {
   background-position: 26px 11px;
   padding-left: 56px;
 
-  
+
   &:hover, &:focus, &:active{
     background-color: rgba(255, 255, 255, 0.09);
     border: none;

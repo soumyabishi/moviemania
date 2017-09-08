@@ -8,9 +8,16 @@ import App from './App.vue'
 import {routes} from './router';
 
 
+import VueLazyload from 'vue-lazyload';
+
+
 Vue.use(VueRouter);
 Vue.use(VueResource);
-
+Vue.use(VueLazyload, {
+  preLoad: 2,
+  loading: '/dist/img-loader.gif',
+  listenEvents: [ 'transitionend' ]
+});
 
 import VueProgressBar from 'vue-progressbar'
 
